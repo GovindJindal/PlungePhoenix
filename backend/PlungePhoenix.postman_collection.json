@@ -1,0 +1,198 @@
+{
+	"info": {
+		"name": "PlungePhoenix",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "http://localhost:8000/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"health"
+					]
+				}
+			}
+		},
+		{
+			"name": "Ingest News",
+			"request": {
+				"method": "POST",
+				"url": {
+					"raw": "http://localhost:8000/api/news/ingest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						"ingest"
+					]
+				}
+			}
+		},
+		{
+			"name": "Latest News",
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "http://localhost:8000/api/news/latest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						"latest"
+					]
+				}
+			}
+		},
+		{
+			"name": "Search News",
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "http://localhost:8000/api/news/search?query=crash&top_k=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"news",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "crash"
+						},
+						{
+							"key": "top_k",
+							"value": "5"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Score Text",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"market crash selloff panic\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/audio/score-text",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"audio",
+						"score-text"
+					]
+				}
+			}
+		},
+		{
+			"name": "Transcribe URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"https://example.com/audio.mp3\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/audio/transcribe-url",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"audio",
+						"transcribe-url"
+					]
+				}
+			}
+		},
+		{
+			"name": "Full Pipeline Demo",
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "http://localhost:8000/api/analysis/demo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"analysis",
+						"demo"
+					]
+				}
+			}
+		},
+		{
+			"name": "Full Pipeline Custom",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"sample transcript here\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/analysis/full-pipeline",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"analysis",
+						"full-pipeline"
+					]
+				}
+			}
+		}
+	]
+}
