@@ -19,7 +19,10 @@ def _ensure_assemblyai_configured() -> None:
 def _run_transcription(audio_url_or_path: str) -> dict:
     """Synchronous transcription execution using AssemblyAI SDK."""
     _ensure_assemblyai_configured()
-    transcriber = aai.Transcriber()
+    transcription_config = aai.TranscriptionConfig(
+        speech_models=["universal-3-pro", "universal-2"]
+    )
+    transcriber = aai.Transcriber(config=transcription_config)
     transcript = transcriber.transcribe(audio_url_or_path)
     
     if transcript.status == aai.TranscriptStatus.error:
