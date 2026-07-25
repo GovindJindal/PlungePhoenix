@@ -14,6 +14,7 @@ class Config:
     LLM_MODEL = os.getenv("LLM_MODEL", "anthropic/claude-sonnet-4-5")
     CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "./chroma_db")
     ET_RSS_URL = os.getenv("ET_RSS_URL", "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms")
+    ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",")]
     
     try:
         PANIC_THRESHOLD = float(os.getenv("PANIC_THRESHOLD", "0.6"))
@@ -27,18 +28,16 @@ class Config:
 
     @classmethod
     def validate(cls):
-        """Require LLM credentials; AssemblyAI is optional until transcription is used."""
+        """Strictly require all external API keys on startup."""
         missing_keys = []
-        if not cls.OPENROUTER_API_KEY:
+        if not cls.OPENROUTER_API_KEY or cls.OPENROUTER_API_KEY == "your_key_here":
             missing_keys.append("OPENROUTER_API_KEY")
+            
+        if not cls.ASSEMBLYAI_API_KEY or cls.ASSEMBLYAI_API_KEY == "your_key_here":
+            missing_keys.append("ASSEMBLYAI_API_KEY")
 
         if missing_keys:
-            raise ValueError(f"Missing required environment variables: {', '.join(missing_keys)}")
-
-        if not cls.ASSEMBLYAI_API_KEY:
-            logger.warning(
-                "ASSEMBLYAI_API_KEY is not set — POST /api/audio/transcribe will fail until it is configured."
-            )
+            raise ValueError(f"Startup Failed. Missing required environment variables: {', '.join(missing_keys)}")
 
 # Validate config on import
 Config.validate()

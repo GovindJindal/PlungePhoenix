@@ -1,5 +1,6 @@
 import logging
 import time
+import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -15,13 +16,17 @@ from backend.routers.audio import router as audio_router
 from backend.routers.analysis import router as analysis_router
 from backend.middleware.error_handler import global_exception_handler
 from backend.utils.response_utils import success
+from backend.config import config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("PlungePhoenix backend started")
+    logger.info("PlungePhoenix backend started - Configuration validated.")
+    db_path = Path(config.CHROMA_PERSIST_DIR)
+    if not db_path.exists():
+        logger.info(f"ChromaDB directory {config.CHROMA_PERSIST_DIR} not found. It will be created on first use.")
     yield
     logger.info("PlungePhoenix backend shutting down")
 
@@ -33,7 +38,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=config.ALLOWED_ORIGINS,
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
@@ -42,10 +47,18 @@ app.add_middleware(
 # Request logging middleware
 class RequestLoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
+        request_id = str(uuid.uuid4())
+        request.state.request_id = request_id
         start_time = time.time()
+        
+        # Inject request_id into headers early if needed
         response = await call_next(request)
+        
         process_time = time.time() - start_time
-        logger.info(f"{request.method} {request.url.path} - {response.status_code} - {process_time:.4f}s")
+        response.headers["X-Request-ID"] = request_id
+        response.headers["X-Process-Time"] = f"{process_time:.4f}"
+        
+        logger.info(f"[{request_id}] {request.method} {request.url.path} - {response.status_code} - {process_time:.4f}s")
         return response
 
 app.add_middleware(RequestLoggingMiddleware)
