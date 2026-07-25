@@ -41,16 +41,47 @@ export default function Navbar({ links, health, compact = false }) {
     return () => observerRef.current?.disconnect();
   }, [links, compact]);
 
-  /* ── close mobile menu on link click ── */
-  const handleLinkClick = useCallback(() => {
+  /* ── close mobile menu & smooth scroll ── */
+  const handleLinkClick = useCallback((e, href) => {
     setMobileOpen(false);
+    
+    if (href.startsWith("#") && href !== "#dashboard") {
+      e.preventDefault();
+      
+      // Update URL hash without jumping
+      if (window.history.pushState) {
+        window.history.pushState(null, "", href);
+      } else {
+        window.location.hash = href;
+      }
+      
+      // Force the route state update for App.jsx
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+      
+      // Give React a tick to render Landing if we were on Dashboard
+      setTimeout(() => {
+        const id = href.replace("#", "");
+        const el = document.getElementById(id);
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        } else if (id === "home") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 50);
+    }
   }, []);
 
   return (
     <header
       className={`navbar ${compact ? "navbar-compact" : ""} ${scrolled ? "navbar-scrolled" : ""}`}
     >
-      <a className="logo" href="#home" aria-label="PlungePhoenix home">
+      <a 
+        className="logo" 
+        href="#home" 
+        aria-label="PlungePhoenix home"
+        onClick={(e) => handleLinkClick(e, "#home")}
+      >
         <AudioLines size={24} strokeWidth={2.5} aria-hidden="true" />
         <span>PlungePhoenix</span>
       </a>
@@ -68,7 +99,7 @@ export default function Navbar({ links, health, compact = false }) {
                   key={link.label}
                   href={link.href}
                   className={activeSection === sectionId ? "active" : ""}
-                  onClick={handleLinkClick}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                 >
                   {link.label}
                 </a>
@@ -94,7 +125,11 @@ export default function Navbar({ links, health, compact = false }) {
             {health.message}
           </div>
         )}
-        <a href="#contact" className="btn-outline" onClick={handleLinkClick}>
+        <a 
+          href="#contact" 
+          className="btn-outline" 
+          onClick={(e) => handleLinkClick(e, "#contact")}
+        >
           Contact Us
         </a>
       </div>
