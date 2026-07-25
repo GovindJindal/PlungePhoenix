@@ -427,6 +427,9 @@ All errors follow a structured JSON format:
 The frontend is a single-page application with two main views:
 
 ### Landing Page
+
+![Homepage Preview](assets/homepage.png)
+
 A premium SaaS homepage with 12 scroll-animated sections:
 - Hero with 3D particle ripple animation
 - "What is PlungePhoenix" with animated AI orb
@@ -441,6 +444,9 @@ A premium SaaS homepage with 12 scroll-animated sections:
 - CTA and professional footer
 
 ### Dashboard
+
+![Dashboard Preview](assets/dashboard.png)
+
 Real-time analysis interface featuring:
 - 🎙️ Microphone recording + file upload
 - 📝 Live transcript display
