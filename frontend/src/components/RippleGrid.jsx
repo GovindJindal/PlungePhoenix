@@ -77,13 +77,13 @@ export default function RippleGrid({ stress = 0 }) {
         const scale = focalLength / (focalLength + translatedZ);
         const screenX = width / 2 + particle.x * scale;
         const screenY = height / 2 + (y + 160) * scale;
-        const opacity = Math.min(1, Math.max(0, scale * 1.5 - 0.25));
-        const radius = Math.max(0.2, 1.7 * scale);
+        const opacity = Math.min(1, Math.max(0, scale * 1.8 - 0.15));
+        const radius = Math.max(0.3, 2.0 * scale);
 
         if (opacity > 0) {
           ctx.beginPath();
           ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(26,86,219,${opacity * 0.6})`;
+          ctx.fillStyle = `rgba(26,86,219,${opacity * 0.7})`;
           ctx.fill();
         }
       }
