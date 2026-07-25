@@ -31,14 +31,14 @@ export default function Landing() {
         <div className="hero-content">
           <div className="hero-left">
             <span id="why-us" className="hero-tag">
-              [ 150+ ORGANIZATIONS ]
             </span>
             <h1 id="heroTitle" className="hero-heading">
-              Clear Insights For
+              Clear Insights&nbsp;For
               <br />
-              Smarter Decisions
+              Smarter&nbsp;Decisions
             </h1>
             <p className="hero-sub">
+              <br/>
               Advanced Audio Sentiment Analysis with
               <br />
               Unrivaled Market Intelligence via PlungePhoenix

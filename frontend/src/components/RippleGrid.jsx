@@ -83,7 +83,7 @@ export default function RippleGrid({ stress = 0 }) {
         if (opacity > 0) {
           ctx.beginPath();
           ctx.arc(screenX, screenY, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(26,86,219,${opacity * 0.15})`;
+          ctx.fillStyle = `rgba(26,86,219,${opacity * 0.6})`;
           ctx.fill();
         }
       }
