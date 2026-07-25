@@ -430,19 +430,6 @@ The frontend is a single-page application with two main views:
 
 ![Homepage Preview](assets/homepage.png)
 
-A premium SaaS homepage with 12 scroll-animated sections:
-- Hero with 3D particle ripple animation
-- "What is PlungePhoenix" with animated AI orb
-- Traditional vs PlungePhoenix comparison
-- Feature cards with gradient hover effects
-- Animated pipeline workflow
-- Layered architecture diagram
-- Technology stack grid
-- Bento-grid key features
-- Dashboard preview
-- Use cases, metrics, roadmap
-- CTA and professional footer
-
 ### Dashboard
 
 ![Dashboard Preview](assets/dashboard.png)
