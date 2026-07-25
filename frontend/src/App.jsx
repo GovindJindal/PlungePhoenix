@@ -51,10 +51,12 @@ export default function App() {
   const navLinks = useMemo(
     () => [
       { label: "Home", href: "#home" },
-      { label: "Why Us", href: "#why-us" },
-      { label: "Platform", href: "#platform" },
-      { label: "Assets", href: "#assets" },
-      { label: "Blog", href: "#blog" },
+      { label: "About", href: "#about" },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Architecture", href: "#architecture" },
+      { label: "Technology", href: "#technology" },
+      { label: "Features", href: "#features" },
+      { label: "Roadmap", href: "#roadmap" },
     ],
     []
   );
