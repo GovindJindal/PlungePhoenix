@@ -77,11 +77,16 @@ def retrieve_relevant_chunks(query: str, top_k: int = 5) -> list[dict]:
     )
     
     retrieved = []
-    if results and results['ids'] and len(results['ids'][0]) > 0:
-        for i in range(len(results['ids'][0])):
-            doc_text = results['documents'][0][i]
-            metadata = results['metadatas'][0][i]
-            distance = results['distances'][0][i] if 'distances' in results and results['distances'] else 0.0
+    ids_list = results.get('ids')
+    docs_list = results.get('documents')
+    metas_list = results.get('metadatas')
+    dists_list = results.get('distances')
+    
+    if ids_list and len(ids_list) > 0 and ids_list[0]:
+        for i in range(len(ids_list[0])):
+            doc_text = docs_list[0][i] if docs_list and len(docs_list) > 0 and docs_list[0] else ""
+            metadata = metas_list[0][i] if metas_list and len(metas_list) > 0 and metas_list[0] else {}
+            distance = dists_list[0][i] if dists_list and len(dists_list) > 0 and dists_list[0] else 0.0
             
             retrieved.append({
                 "text": doc_text,

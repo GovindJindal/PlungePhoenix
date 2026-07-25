@@ -59,15 +59,18 @@ async def get_latest_news() -> Dict[str, Any]:
         
         articles = []
         if results and results.get('metadatas'):
-            for meta in results['metadatas']:
-                article = NewsArticle(
-                    title=meta.get('title', ''),
-                    summary="", 
-                    source=meta.get('source', ''),
-                    published_at=meta.get('published_at', ''),
-                    url=meta.get('url', '')
-                )
-                articles.append(article.model_dump())
+            metas = results['metadatas']
+            if metas:
+                for meta in metas:
+                    if meta:
+                        article = NewsArticle(
+                            title=str(meta.get('title', '')),
+                            summary="", 
+                            source=str(meta.get('source', '')),
+                            published_at=str(meta.get('published_at', '')),
+                            url=str(meta.get('url', ''))
+                        )
+                        articles.append(article.model_dump())
                 
         return success({"articles": articles}, "Latest news fetched")
     except Exception as e:

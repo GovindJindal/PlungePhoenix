@@ -76,6 +76,8 @@ def _run_transcription(audio_url_or_path: str) -> dict:
             delay = base_delay * (2 ** attempt)
             logger.warning(f"AssemblyAI transient error: {e}. Retrying in {delay} seconds...")
             time.sleep(delay)
+            
+    raise TranscriptionError("Transcription failed for unknown reasons.")
 
 async def transcribe_audio(file_path: str) -> dict:
     """

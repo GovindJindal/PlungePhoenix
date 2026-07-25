@@ -11,6 +11,7 @@ import logging
 import chromadb
 from chromadb.config import Settings as ChromaSettings
 
+from chromadb.api import ClientAPI
 from backend.config import config
 
 logger = logging.getLogger(__name__)
@@ -19,10 +20,10 @@ logger = logging.getLogger(__name__)
 # Singleton client — initialized once when the module is first imported
 # ---------------------------------------------------------------------------
 
-_chroma_client: chromadb.PersistentClient | None = None
+_chroma_client: ClientAPI | None = None
 
 
-def get_chroma_client() -> chromadb.PersistentClient:
+def get_chroma_client() -> ClientAPI:
     """
     Return the shared ChromaDB persistent client.
     Creates it on first call; subsequent calls return the cached instance.

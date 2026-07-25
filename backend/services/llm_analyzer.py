@@ -119,6 +119,8 @@ async def analyze(request: AnalysisRequest, news_chunks: list[dict]) -> Analysis
         except Exception as e:
             logger.error(f"Unexpected OpenRouter Error: {e}. Switching to fallback provider...")
             return await _fallback_analyze(messages)
+            
+    return await _fallback_analyze(messages)
 
 async def _process_response(response, messages, active_client, model_name: str) -> AnalysisResult:
     raw_output = response.choices[0].message.content or ""
