@@ -39,7 +39,7 @@
 
 ## 🧠 Overview
 
-PlungePhoenix is an end-to-end AI-powered market intelligence platform that combines **audio sentiment analysis**, **real-time financial news monitoring**, and **AI-driven trading recommendations** into a single dashboard.
+PlungePhoenix is an end-to-end AI-powered market intelligence platform that combines **audio sentiment analysis**, **real-time financial news monitoring**, and **Panic Alerts** into a single dashboard.
 
 The system continuously:
 
